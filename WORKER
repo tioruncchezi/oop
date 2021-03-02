@@ -1,0 +1,91 @@
+#include <windows.h>
+#include <iostream>
+
+using namespace std;
+
+struct Worker { // начало объявления структурного типа Worker
+
+    char NAME[30]; //объявление поля «фамилия работника»
+
+    char POS[15]; //объявление поля «название занимаемой должности»
+
+    unsigned short int YEAR; //объявление поля «год поступления на работу»
+
+}; //конец объявление структуры Worker
+int main()
+{
+    system("chcp 1251");
+    int n = 2; // объявление константы n — числа элементов типа «Worker»
+
+    bool people = false;
+
+    unsigned short int now_year = 2020, seniority; // объявление переменных now_year — текущий год и seniority — стаж
+
+    Worker* TABL = new Worker[n];
+
+    Worker temp;
+
+    for (int i = 0; i < n; i++)
+
+    {
+        cout << "Фамилия и инициалы работника №" << i+1 << ": ";
+
+        if (i>0) { cin.ignore(); };
+        
+        cin.getline(TABL[i].NAME, 30);
+
+        cout << "\nНазвание занимаемой должности работника №" << i + 1 << ": ";
+
+        cin >> TABL[i].POS;
+
+        cout << "\nГод поступления на работу работника №" << i + 1 << ": ";
+
+        cin >> TABL[i].YEAR;
+
+        cout << "\n";
+    }
+
+    cout << "Введите стаж работы(лет): ";
+
+    cin >> seniority;
+
+    for (int i = 0; i < n; i++)
+
+    {
+        if ((now_year - TABL[i].YEAR) > seniority)
+
+        {
+            cout << '\n' << TABL[i].NAME;
+
+            people = true;
+        }
+    }
+
+    if (people == false) cout << "Нет таких работников!" << endl;
+
+    cout << "\nСписок работников в алфавитном порядке" << endl;
+
+    for (int i = 0; i < n - 1; i++)
+
+    {
+        for (int j = 1; j < n; j++)
+
+            if (strcmp(TABL[i].NAME, TABL[j].NAME) > 0)
+
+            {
+                temp = TABL[i];
+
+                TABL[i] = TABL[j];
+
+                TABL[j] = temp;
+            }
+    }
+
+    for (int i = 0; i < n; i++)
+
+        cout << "\nФамилия и инициалы: " << TABL[i].NAME << "\nДолжность: " << TABL[i].POS << "\nГод поступления: " << TABL[i].YEAR << "\n\n" << endl;
+
+    system("pause");
+
+    return 0;
+}
